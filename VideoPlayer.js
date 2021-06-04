@@ -79,6 +79,7 @@ export default class VideoPlayer extends Component {
       orientation: this.props.orientation,
       isEnded: false,
       hideAllControls: false,
+      imageToDisplay: ''
     };
 
     /**
@@ -532,6 +533,7 @@ export default class VideoPlayer extends Component {
 
     if (state.paused) {
       typeof this.events.onPause === 'function' && this.events.onPause();
+
     } else {
       typeof this.events.onPlay === 'function' && this.events.onPlay();
     }
@@ -1269,6 +1271,17 @@ export default class VideoPlayer extends Component {
     return null;
   }
 
+  renderImageOverlay(){
+    return (
+      <View style={styles.loader.container}>
+        <Image
+          source={{uri: this.props.imageToDisplay}}
+          style={styles.player.imageOverlay}
+        />
+      </View>
+    );
+  }
+
   renderError() {
     if (this.state.error) {
       return (
@@ -1328,6 +1341,7 @@ export default class VideoPlayer extends Component {
             />
             {this.renderError()}
             {this.renderLoader()}
+            {this.props.streamStore.isVideoEnded || this.state.paused ? this.renderImageOverlay() : null}
             {!this.props.streamStore.hideAllControls && this.renderTopControls()}
             {!this.props.streamStore.hideAllControls && this.renderBottomControls()}
           </View>
@@ -1380,6 +1394,11 @@ const styles = {
       bottom: 0,
       left: 0,
     },
+    imageOverlay:{
+      height: '100%',
+      width: '100%',
+      position: 'absolute'
+    }
   }),
   error: StyleSheet.create({
     container: {
@@ -1410,6 +1429,7 @@ const styles = {
       alignItems: 'center',
       justifyContent: 'center',
     },
+
   }),
   controls: StyleSheet.create({
     row:(orientation)=> ({
