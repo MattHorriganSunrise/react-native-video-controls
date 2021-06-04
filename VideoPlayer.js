@@ -300,16 +300,7 @@ export default class VideoPlayer extends Component {
    * @param {object} err  Err obj returned from <Video> component
    */
   _onError(err) {
-    let state = this.state;
-
-    if(err.error.what === -2147483648 || err.error.what ===-38){
-      return this.setState({loading: false});
-    }
-    state.error = true;
-    state.loading = false;
-
-
-    this.setState(state);
+    return this.setState({loading: false});
   }
 
   /**
