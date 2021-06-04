@@ -1341,7 +1341,7 @@ export default class VideoPlayer extends Component {
             />
             {this.renderError()}
             {this.renderLoader()}
-            {this.props.streamStore.isVideoEnded || this.state.paused ? this.renderImageOverlay() : null}
+            {this.props.streamStore.isVideoEnded ? this.renderImageOverlay() : null}
             {!this.props.streamStore.hideAllControls && this.renderTopControls()}
             {!this.props.streamStore.hideAllControls && this.renderBottomControls()}
           </View>
